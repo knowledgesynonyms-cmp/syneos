@@ -1,0 +1,46 @@
+html,body,
+div#root{
+  height: 100%!important;
+}
+
+div#root{
+  background:url(../images/bg.jpg);
+  background-size: contain;
+  background-color: rgba(255,255,255,.6);
+  background-blend-mode: soft-light;
+}
+
+div.heading{
+  background-color:#00000011;
+  padding: 10px 20px;
+  font-size: 20px;
+  color: #000;
+}
+
+div.box{
+  background-color: #ffffff71;
+  border: 1px Solid #888;
+  border-radius: 10px;
+  padding: 20px;
+  margin: auto;
+}
+
+.btn-es{
+  background-color: #323ea78c;
+  color: #ffffff;  
+}
+
+.room.box .bar{
+  background-color: #323ea78c;
+  color: #ffffff;  
+  padding: 10px;
+  margin: -20px;
+}
+
+.clickableRooms{
+  cursor: pointer;  
+}
+
+.clickableRooms:hover{
+  background-color: #ffffff;
+}
