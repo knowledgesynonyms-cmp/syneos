@@ -63,6 +63,7 @@
 
     <script src="js/login.js"></script>
     <script src="js/room.js"></script>
+    <script src="js/timer.js"></script>
     <script src="js/main.js"></script>
 
   </body>
