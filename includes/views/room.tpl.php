@@ -1,4 +1,9 @@
-<div class="container-fluid h-100">
+<div class="roomListBox container-fluid h-100 p-5">
+  <h2 class="text-center">Select a room</h2>
+  <div class="row"></div>  
+</div>
+
+<!-- div class="container-fluid h-100">
   <div class="room box h-100" style="border-radius: 0px;">
     <div class="row bar">
       <div class="col-sm-4">Logged in as: <span class="logged-in-user">Steven Smith</span></div>
@@ -10,4 +15,4 @@
     <div class="row holder">
     </div>
   </div>
-</div>
+</div -->

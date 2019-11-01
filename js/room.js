@@ -20,8 +20,6 @@ if (typeof ES == 'undefined') {
     render(rooms){
       var oSelf = this;
 
-      ES.totalRooms = rooms.length; //== Set total rooms available
-
       this.roomObjs = rooms.map((room) => new ES.Room({
         container: this.container, 
         data: room      
@@ -71,21 +69,11 @@ if (typeof ES == 'undefined') {
     onClick(){
       ES.step='roomView'; //== set to room view now
       ES.roomVisited.push(this);
-      ES.next(); //== got the template
-      this.initBar();
+      ES.next(); //== got the template      
     }
 
     initBar(){
-      console.log($(this.container).html());
-      $(this.container).find('span.room-visited').eq(0).html(ES.roomVisited.length);
-      $(this.container).find('span.room-total').eq(0).html(ES.totalRooms);
-
-      this.timeTicker = new ES.TimeTicker({
-        container: $(this.container).find('span.timeticker'), 
-        onTimeout: function(){
-          alert("Timed out");
-        }
-      });      
+                       
       //== time ticker to start here for the room via another class object which handles time factor
     }   
 
@@ -96,19 +84,153 @@ if (typeof ES == 'undefined') {
   }
 
 
-  class TimeTicker {
+  class TimeBar {
 
-    constructor(){
+    constructor(props){
       this.container = props.container;      
-      this.onTimeout = props.onTimeout; 
+      this.timer = 0;      //== in seconds
       this.init();
     }
 
-    init(){
+    start(){
+      $(this.container).show();
+      this.play();
+    }
+
+    init(){      
       var oSelf = this;
-      this.ticker = window.setTimeout(function(){
-        oSelf.onTick();
+      
+      this.start();
+
+      $(this.container).find('.playpause').bind('click',function(){
+        oSelf.playPause();
+      });
+    }
+
+    playPause(){      
+      this.isTicking() ? this.pause(): this.play();
+    }
+
+    pause(){
+      $(this.container).hide();      
+      ES.pauseTimerObj.start();      
+      window.clearInterval(this.ticker);
+      this.ticker = false;
+      this.refresh();
+    }
+
+    play(){
+      var icon = 'fa-play-o';
+
+      var oSelf = this;
+
+      this.ticker = window.setInterval(function(){
+        oSelf.tick();
       },1000);
+      this.refresh();
+    }
+
+    isTicking(){
+      return this.ticker;
+    }
+
+    tick(){
+      this.timer+=1;
+      this.refresh();
+    }
+
+    refresh(){
+      $(this.container).find('.ticker').html(this.getTime());      
+
+      if(this.isTicking()){
+        $(this.container).find('.playpause').removeClass('fa-play-circle-o');
+        $(this.container).find('.playpause').addClass('fa-pause-circle-o');
+      }else{        
+        $(this.container).find('.playpause').removeClass('fa-pause-circle-o');
+        $(this.container).find('.playpause').addClass('fa-play-circle-o');
+      }
+    }
+
+    getTime(){
+      var dt = new Date();
+      var tz = dt.getTimezoneOffset()*60;
+      dt.setHours(0);
+      dt.setMinutes(0);
+      dt.setSeconds(this.timer-tz);
+      dt = dt.toISOString();
+      dt = dt.substring(dt.indexOf('T')+1,dt.lastIndexOf('.'));
+      //dt = dt.split(':');
+      return dt;
+    }
+
+    onTick(){
+      
+    }
+  }
+
+
+  class PauseTimer {
+
+    constructor(props){
+      this.container = props.container;      
+      this.timer = 0;      //== in seconds
+      this.ticker = false;
+      this.init();
+    }
+
+    start(){
+      $('#pauseTimer').fadeIn();
+      this.play();
+    }
+
+    init(){      
+      var oSelf = this;
+      $(this.container).find('.playtimer').bind('click',function(){
+        oSelf.pause();
+        ES.timebarObj.start();
+      });
+    }
+
+    pause(){
+      $(this.container).hide();            
+      window.clearInterval(this.ticker);
+      this.ticker = false;      
+    }
+
+    play(){
+      var icon = 'fa-play-o';
+
+      var oSelf = this;
+
+      this.ticker = window.setInterval(function(){
+        oSelf.tick();
+      },1000);
+      this.refresh();
+    }
+
+    isTicking(){
+      return this.ticker;
+    }
+
+    tick(){
+      this.timer+=1;
+      this.refresh();
+    }
+
+    refresh(){
+      $(this.container).find('.ticker').html(this.getTime());
+    }
+
+    getTime(){
+      var dt = new Date();
+      var tz = dt.getTimezoneOffset()*60;
+      dt.setHours(0);
+      dt.setMinutes(0);
+      dt.setSeconds(this.timer-tz);
+      dt = dt.toISOString();
+      dt = dt.substring(dt.indexOf('T')+4,dt.lastIndexOf('.'));
+      //dt = dt.split(':');
+      return dt;
     }
 
     onTick(){
@@ -118,6 +240,7 @@ if (typeof ES == 'undefined') {
 
   ES.RoomList = RoomList; //== Push this class to namespace ES
   ES.Room = Room; //== Push this class to namespace ES
-  ES.TimeTicker = TimeTicker; //== push this class to namespace ES
+  ES.TimeBar = TimeBar; //== push this class to namespace ES
+  ES.PauseTimer = PauseTimer; //== push this class to namespace ES
 
 }());

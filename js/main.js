@@ -6,6 +6,8 @@ ES.step='login'; //== step added, this is a global variable which will decide th
 ES.roomId = null; // set and used for "roomView"
 ES.totalRooms = 0; // == should be intiated from ES.RoomList.load
 ES.roomVisited=[]; //== none as of now
+ES.timebarObj = null;
+ES.pauseTimerObj = new ES.PauseTimer({container: $('#pauseTimer')});
 
 //== global function available to ES namespace
 ES.next = () => ({
@@ -25,8 +27,14 @@ ES.next = () => ({
   },
 
   'roomList': function (){    
-    $('#app').html(`<div class="roomListBox container-fluid h-100 p-5 row"></div>`);
-    let roomListObj = new ES.RoomList({container: $('#app .roomListBox')});
+    //== attach the simulation timebar
+    $('#root').append($('#tpl-timebar').html());
+    $('#tpl-timebar').remove();
+    ES.timebarObj = new ES.TimeBar({
+      container: $('#root > .timebar')
+    });
+    $('#app').html($('#tpl-room').html());    
+    let roomListObj = new ES.RoomList({container: $('#app div.roomListBox > .row')});
     roomListObj.load();
   },
 

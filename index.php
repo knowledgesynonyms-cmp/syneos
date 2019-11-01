@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/main.css">  
   </head>
   <body>
@@ -35,8 +36,24 @@
           <?php require_once('includes/views/room.tpl.php')?>          
         </div>
 
+        <div id="tpl-timebar">
+          <?php require_once('includes/views/timebar.tpl.php')?>          
+        </div>
+
       </div>
       
+    </div>
+
+    <div id="pauseTimer" style="display:none">
+      <div class="d-flex align-items-center h-100">
+        <div class="container-fluid">
+          <h1>SIMULATION PAUSED</h1>
+          <br /> 
+          <h4>Pause time remaining</h4>
+          <div class="ticker">00:00</div>          
+          <button class="playtimer btn btn-es">RETURN</button>
+        </div>  
+      </div>
     </div>
 
 
