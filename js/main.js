@@ -4,8 +4,8 @@ if (typeof ES == 'undefined') {
 
 ES.step='login'; //== step added, this is a global variable which will decide the current step
 ES.roomId = null; // set and used for "roomView"
-ES.totalRooms = 0; // == should be intiated from ES.RoomList.load
 ES.roomVisited=[]; //== none as of now
+ES.roomListObj = null;
 ES.timebarObj = null;
 ES.pauseTimerObj = new ES.PauseTimer({container: $('#pauseTimer')});
 
@@ -34,12 +34,12 @@ ES.next = () => ({
       container: $('#root > .timebar')
     });
     $('#app').html($('#tpl-room').html());    
-    let roomListObj = new ES.RoomList({container: $('#app div.roomListBox > .row')});
-    roomListObj.load();
+    ES.roomListObj = new ES.RoomList({container: $('#app div.roomListBox > .row')});
+    ES.roomListObj.load();
   },
 
-  'roomView': function (){
-    $('#app .roomListBox').html($('#tpl-room').html());
+  'roomView': function () {    
+    //== do nothing here
   } 
 
 

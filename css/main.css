@@ -71,7 +71,7 @@ div.timebar span.ticker{
   font-size: 20px;
 }
 
-div.timebar .fa-pause-circle-o{
+div.timebar .fa-pause-circle-o, div.timebar .helpbtn{
   cursor: pointer;
 }
 
@@ -101,4 +101,27 @@ div#pauseTimer .ticker{
 
 div#pauseTimer button{
   margin-top: 40px;
+}
+
+div#window-help, 
+div#window-complete{
+  display:none;
+  vertical-align: top;
+  text-align: center;
+  position:absolute;
+  height: 100%;
+  width: 100%;
+  top:0px;
+  left: 0px;
+  background-color: #444444;
+  color: #aaa;  
+}
+
+p.complete-text{
+  font-size: 20px !important;
+}
+
+.bluecheck{  
+  width: 20px;
+  height: 20px;
 }

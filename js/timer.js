@@ -75,6 +75,36 @@ if (typeof ES == 'undefined') {
       $(this.container).find('.playpause').bind('click',function(){
         oSelf.playPause();
       });
+
+      $(this.container).find('.helpbtn').bind('click',function(){
+        $('#window-help').fadeIn();
+        oSelf.hide();
+      });
+      
+      $('#window-help').find('.hidehelp').bind('click',function(){
+        $('#window-help').fadeOut();
+        oSelf.show();
+      });
+
+      $(this.container).find('.btn-complete').bind('click',function(){
+        $('#window-complete').fadeIn();        
+        oSelf.hide();
+      });
+
+      $('#window-complete').find('.btn-goback').bind('click',function(){
+        $('#window-complete').fadeOut();
+        oSelf.show();
+      });
+
+
+    }
+
+    hide(){
+      $(this.container).hide();
+    }
+
+    show(){
+      $(this.container).show();
     }
 
     playPause(){      

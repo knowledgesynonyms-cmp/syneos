@@ -69,13 +69,13 @@ if (typeof ES == 'undefined') {
     onClick(){
       ES.step='roomView'; //== set to room view now
       ES.roomVisited.push(this);
-      ES.next(); //== got the template      
+      this.showRoom();
+      //ES.next(); //== got the template      == not needed
     }
 
-    initBar(){
-                       
-      //== time ticker to start here for the room via another class object which handles time factor
-    }   
+    showRoom(){
+      $(this.container).html();
+    }
 
     destroy(){
       delete this;

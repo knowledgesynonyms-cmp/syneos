@@ -38,10 +38,18 @@
 
         <div id="tpl-timebar">
           <?php require_once('includes/views/timebar.tpl.php')?>          
-        </div>
+        </div>       
 
       </div>
       
+    </div>
+
+    <div id="window-help">
+      <?php require_once('includes/views/help.tpl.php')?>          
+    </div>
+
+    <div id="window-complete">
+      <?php require_once('includes/views/complete.tpl.php')?>          
     </div>
 
     <div id="pauseTimer" style="display:none">
