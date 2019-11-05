@@ -74,7 +74,95 @@ if (typeof ES == 'undefined') {
     }
 
     showRoom(){
-      $(this.container).html();
+      $(this.container).hide();
+      $(this.container).parent().find('.heading').remove();      
+      this.roomDesign();
+    }
+
+    roomDesign(){
+      this.initRoomView();
+      this.initToolbar();
+      this.initPan();
+      //this.initZoom();      
+    }
+
+    initRoomView(){
+      var oSelf = this;
+      $(this.container).parent().find('#roomHolder').show();
+
+      $(window).resize(function(){
+        oSelf.setRoomSize();
+      });
+
+      this.setRoomSize();
+
+      $('#roommap').find('.openmodal').click(function(event){
+        oSelf.openModal(this);
+        event.stopPropagation();
+      });
+    }
+
+    openModal(area){
+      $('#modal').modal();
+      $('#modal .modal-body').html('<img class="img-fluid" title="'+$(area).attr('title')+'" src="' + $(area).attr('src') + '" />');
+      var shelfObj = {
+        type: 'image',
+        title: $(area).attr('title'),
+        src: $(area).attr('src')
+      };
+      if(!ES.alreadyOnShelf(shelfObj)){
+        $('#modal .modal-footer').html('<button class="btn btn-danger add2shelf"> + </button>');
+        $('#modal .modal-footer .add2shelf').bind('click', function(){        
+          ES.shelf.push(shelfObj);
+          $(this).parent().append('<div class="alert alert-success">Added to shelf</div>');
+          $(this).fadeOut();
+        });
+      }else{
+        $('#modal .modal-footer').html('<div class="alert alert-info">Already added to Shelf</div>');
+      }
+    }
+
+    //== set the room size 
+    setRoomSize(){
+      $('#roomHolder').height(document.body.offsetHeight-60);
+    }
+
+    initToolbar(){      
+      $('#roomToolbar').show();
+      $('#roomToolbar > .switch').eq(0).bind('click',ES.seeAllRooms);
+    }
+
+    initPan(){
+      $('#roomPan').show();
+
+      $('#roomPan > #panleft').bind('click',function(){
+        var m = parseInt($('#roomImage').css('marginLeft')) + 50;
+        if(m > 0){
+          m = 0;
+        }
+        $('#roomImage').css('marginLeft', m);
+      });
+
+      $('#roomPan > #panright').bind('click',function(){
+        var m = parseInt($('#roomImage').css('marginLeft')) - 50;
+        var w1 = $('#roomImage').width();
+        var w2 = $('#roomHolder').width();
+        if(m*-1 > w1-w2){
+          m= (w1-w2)*-1;
+        }
+        $('#roomImage').css('marginLeft', m);
+      });
+    }
+
+    initZoom(){
+      $('#roomZoom').show();
+      $('#btnzoom').bind('change',function(){        
+        /*if(this.checked){
+          $('#roomImage').css('height',$('#roomImage').width());      
+        }else{
+          $('#roomImage').css('height','100%');
+        }*/
+      });
     }
 
     destroy(){

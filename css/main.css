@@ -125,3 +125,60 @@ p.complete-text{
   width: 20px;
   height: 20px;
 }
+
+#roomHolder{  
+  display:none;
+  overflow: hidden;   
+  margin-left:-15px;
+  margin-right: -15px; 
+}
+
+#roomHolder img#roomImage{
+  
+}
+
+#roomToolbar{      
+  position: absolute;
+  top: 50px;
+  left: 0px;  
+  background-color: #ddd;
+  border: 1px Solid #ccc;  
+}
+
+#roomToolbar .switch{
+  cursor: pointer;
+}
+
+#roomToolbar .switch.active, 
+#roomToolbar .switch:hover{
+  background-color: #E8DAA2;
+}
+
+#roomToolbar .switch span.fa{
+  font-size: 40px;
+}
+
+#roomToolbar .switch span.fa div.text{    
+  width: 60px;
+  font-size: 12px;
+}
+
+#roomPan{      
+  position: absolute;
+  top: 50px;
+  left: 280px;
+}
+
+#roomPan span{
+  background-color: #5A80FB;
+  padding: 10px;
+  color: #fff;
+  cursor: pointer;
+  margin: 2px;
+}
+
+#roomZoom{
+  position: absolute;
+  top: 50px;
+  left: 450px;
+}

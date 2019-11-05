@@ -8,6 +8,7 @@ ES.roomVisited=[]; //== none as of now
 ES.roomListObj = null;
 ES.timebarObj = null;
 ES.pauseTimerObj = new ES.PauseTimer({container: $('#pauseTimer')});
+ES.shelf = []; //== document shelf 
 
 //== global function available to ES namespace
 ES.next = () => ({
@@ -21,20 +22,21 @@ ES.next = () => ({
     $('#app').html($('#tpl-intro').html());
     $('#app').find('.box').removeClass('d-none').hide().fadeIn();
     $('#app').find('.btn-cont').bind('click',() => {
-      ES.step='roomList'; //== list of rooms to be chosen
-      ES.next();
+      ES.seeAllRooms();
     });
   },
 
   'roomList': function (){    
-    //== attach the simulation timebar
-    $('#root').append($('#tpl-timebar').html());
-    $('#tpl-timebar').remove();
-    ES.timebarObj = new ES.TimeBar({
-      container: $('#root > .timebar')
-    });
+    if(!ES.timebarObj){
+      //== attach the simulation timebar
+      $('#root').append($('#tpl-timebar').html());
+      $('#tpl-timebar').remove();
+      ES.timebarObj = new ES.TimeBar({
+        container: $('#root > .timebar')
+      });
+    }
     $('#app').html($('#tpl-room').html());    
-    ES.roomListObj = new ES.RoomList({container: $('#app div.roomListBox > .row')});
+    ES.roomListObj = new ES.RoomList({container: $('#app div.roomListBox > .rooms-list')});
     ES.roomListObj.load();
   },
 
@@ -44,6 +46,15 @@ ES.next = () => ({
 
 
 })[ES.step]();
+
+ES.seeAllRooms = () => {
+  ES.step='roomList'; //== list of rooms to be chosen
+  ES.next();
+};
+
+ES.alreadyOnShelf = obj => {
+  return (ES.shelf.filter((ele) => ele.type==obj.type && ele.name==obj.name)).length > 0;
+};
 
 
 
