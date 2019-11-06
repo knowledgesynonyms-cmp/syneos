@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/main.css"> 
+    <style>
+      .saved{
+        display: none;
+        position:absolute;
+        z-index: 999;
+        background-color:#575757;        
+        width: calc(100% - 2rem);
+        height: calc(100% - 2rem);
+        padding: 20px;
+      }
+
+      .noterow{
+        cursor:pointer;
+        background-color: #fff;
+        border-bottom: 1px Solid #ccc;
+        padding: 20px;        
+      }
+    </style> 
+  </head>
+  <body>
+
+    <div id="root"> 
+      
+      <div class="row no-gutters">
+        <div class="col-sm-6 p-3">          
+          <div class="card h-100" style="background-color:#575757;">
+            <div class="heading text-center" style="color:#fff">Query Form</div>
+
+            <div class="card-body">
+
+              <div class="row m-4"><input type="text" name="subject" placeholder="Subject #" class="form-control"></div>
+              <div class="row m-4"><input type="text" name="visit" placeholder="Visit #" class="form-control"></div>
+              <div class="row m-4"><input type="text" name="location" placeholder="Location of issue (Source, ISF, eCRF)" class="form-control"></div>
+
+              <div class="row m-4">
+                <select name="action" placeholder="Additional Action" class="form-control">
+                  <option>Additional Action</option>
+                  <option value="1">Option 1</option>
+                  <option value="2">Option 2</option>
+                  <option value="3">Option 3</option>
+                </select>
+              </div>
+
+              <div class="row m-4">
+                <select name="deviation" placeholder="Non-Compliance/Deviations" class="form-control">
+                  <option>Non-Compliance/Deviations</option>
+                  <option value="1">Option 1</option>
+                  <option value="2">Option 2</option>
+                  <option value="3">Option 3</option>
+                </select>
+              </div>
+
+              <div class="row m-4">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="report" value="1" name="report" />
+                  <label class="custom-control-label" style="color: #fff" for="report">Report Non-Compliance to IRB/EC (turn on for YES)</label>
+                </div>
+              </div>
+
+              <div class="row m-4">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="escalate" value="1" name="escalate" />
+                  <label class="custom-control-label" style="color: #fff" for="escalate">Immediate Escalation to Project Team (turn on for YES)</label>
+                </div>
+              </div>
+
+              <div class="row m-4"><textarea name="query" placeholder="Query" class="form-control"></textarea></div>
+             
+            </div>
+
+            <div class="card-footer row no-gutters">
+              <div class="col-sm-6 text-right p-1"><button class="btn btn-secondary w-100 h-100">View Saved Queries</button></div>
+              <div class="col-sm-6 text-left p-1"><input type="submit" class="btn btn-primary w-100 h-100" value="Save" /></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 p-3">          
+          <div id="savedNotes" class="saved card"></div>
+          
+          <form id="noteform" name="noteform" class="h-100" method="post" action="somephp.php" onSubmit="return onNoteSave(this)">            
+            <input type="hidden" name="action" value="note-save" />
+            <input type="hidden" name="note_id" value="" />
+
+            <div class="card h-100" style="background-color:#575757;">            
+              
+              <div class="heading text-center" style="color:#fff">Notes</div>
+
+              <div class="card-body h-100">              
+                <div class="row m-4" style="height:calc(100% - 20px)"><textarea name="notes" class="form-control"></textarea></div>              
+              </div> 
+
+              <div class="card-footer row no-gutters">
+                <div class="col-sm-6 text-right p-1"><input type="button" class="btn btn-secondary w-100 h-100" onclick="loadNotes()" value="View Saved Notes" /></div>
+                <div class="col-sm-6 text-left p-1"><input type="submit" class="btn btn-primary w-100 h-100" value="Save" /></div>
+              </div>
+            
+            </div>
+          </form>  
+        </div>
+
+      </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+    <script>
+
+      var savedNotes = [];
+
+      function getTime(dt){
+        dt = dt.split(' ');
+        return dt[1].substring(0,5); //== rectify this time factor to AM/PM
+      }
+
+      function loadNotes(){
+        $('#savedNotes').fadeIn();
+        $('#savedNotes').html('<div class="text-center" style="color:#fff">loading notes...</div>'); //== show a loader here..  
+        
+        $.get('server.php?action=load-notes',function(notes){
+          notes = JSON.parse(notes);          
+          if(notes.data){
+            savedNotes = notes.data;
+            viewSavedNotes();
+          }
+        });
+      }
+
+      function viewSavedNotes(){        
+        var str = '';
+        savedNotes.forEach((note) => {
+          str+=`<div class="row noterow  no-gutters" note_id="${note.id}" title="Click to edit">
+                  <div class="col-lg-9 text-left">Saved Note | ${getTime(note.updated_on)}</div>
+                  <div class="col-lg-3 text-right"> &gt; </div>
+                </div>`;
+        });
+
+        str+=`<div class="pt-4 text-right"><input type="button" class="btn btn-primary" value="New Note" onclick="reloadNoteForm()" /></div>`;
+
+        $('#savedNotes').html(str);
+
+        $('#savedNotes .noterow').bind('click',onNoteRowClick);
+      }
+
+      function reloadNoteForm(){
+        $('#savedNotes').hide();
+        document.noteform.note_id.value='';
+        document.noteform.notes.value='';
+      }
+
+      function onNoteRowClick(){
+        var noterow = this; //== clicking div
+
+        var note_id = $(noterow).attr('note_id');        
+        noterow = savedNotes.filter(note => note.id==note_id);
+        console.log(noterow);
+        if(noterow.length == 1){
+          noterow = noterow[0];
+          document.noteform.note_id.value = noterow.id;
+          document.noteform.notes.value = noterow.notes;
+          $('#savedNotes').hide();
+        }
+
+      }
+
+      function onNoteSave(frm){
+        console.log(frm.serialize()); //== save this via ajax use $.post()
+        return false;
+      }
+
+    </script>  
+
+  </body>
+</html>

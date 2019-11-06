@@ -1,0 +1,109 @@
+[{
+  "name": "Monitoring Room",
+  "binders": [{
+    "name": "10025001",
+    "tabs": [{
+      "name": "Baseline",
+      "documents": [
+        {
+          "name": "10025001 Baseline EQ5D",            
+          "pages": 3
+        },
+        {
+          "name": "10025001 Baseline LAB RESULTS"            
+        },
+        {
+          "name": "10025001 Baseline Urine Dipstick"
+        },
+        {
+          "name": "10025001 Baseline WPAI_US"
+        }
+      ]      
+    },
+    {
+      "name": "Follow Up",
+      "documents": [
+        {
+          "name": "10025001 Follow Up LAB RESULTS",
+          "pages": 2
+        },
+        {
+          "name": "CJ1017-1998 IP Shipment 2"
+        }
+      ]      
+    },
+    {
+      "name": "ICF",
+      "documents": [
+        {
+          "name": "10025001 CJ1017-1998 Main Consent",
+          "pages": 16
+        },
+        {
+          "name": "10025001 CJ1017-1998 Main Consent_V2",
+          "pages": 16
+        },
+        {
+          "name": "10025001 CJ1017-1998 PK Consent",
+          "pages": 7
+        }
+      ]
+    },
+    {
+      "name": "Investigational Product",
+      "documents": [
+        {
+          "name": "10025001 Unscheduled LAB RESULTS"
+        }
+      ]      
+    },
+    {
+      "name": "Logs",
+      "documents": [
+        {
+          "name": "10025001 Adverse Event Log"
+        },
+        {
+          "name": "10025001 Follow Up Urine Dipstick"
+        },
+        {
+          "name": "10025001 Phone Log"
+        }
+      ]      
+    },
+    {
+      "name": "Screening",
+      "documents": [
+        {
+          "name": "10025001 Screening LAB RESULTS"
+        }
+      ]
+    },
+    {
+      "name": "Unscheduled Visit",
+      "documents": [
+        {
+          "name": "10025001 Unscheduled LAB RESULTS"
+        }
+      ]
+    },
+    {
+      "name": "Week 4",
+      "documents": [
+        {
+          "name": "10025001 IP Accountability Log Erigila"
+        },
+        {
+          "name": "10025001 Week 4 LAB RESULTS"
+        }
+      ]
+    }]
+  },
+  {
+    "name": "10025002",
+    "folder": "10025002 Binder",
+    "tabs": []
+  }]
+}]
+
+    
